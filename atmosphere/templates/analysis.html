@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Analysis{% endblock %}
+{% block header %}Analysis{% endblock %}
+{% block graph %}
+{% if data %}
+    <script>
+        window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                zoomEnabled: true,
+                title: {
+                    text: "{{ data['y']['description'] }} vs {{ data['x']['description'] }}"
+                },
+                axisX: {
+                    title: "{{ data['x']['description'] }} ({{ data['x']['units'] }})"
+                    //minimum: 790,
+                    //maximum: 2260
+                },
+                axisY: {
+                    title: "{{ data['y']['description'] }} ({{ data['y']['units'] }})"
+                },
+                data: [{
+                    type: "scatter",
+                    toolTipContent: "{state}<br><b>{{ data['x']['units'] }}: </b>{x}<br/><b>{{ data['y']['units'] }}: </b>{y}",
+                    dataPoints: [
+						{% for member in data['x']['data'] %}
+						{% if (data['x']['data'][member] == NULL) or (data['y']['data'][member] == NULL) %}
+						{% else %}
+                            { x: {{data['x']['data'][member]}}, y: {{ data['y']['data'][member] }}, state: "{{member}}" },
+						{% endif %}
+						{% endfor %}
+                    ]
+                }]
+            });
+            chart.render();
+
+        }
+    </script>
+{% endif %}
+{% endblock %}
+{% block content %}
+
+<div class="container">
+
+  <form action="/analysis" class="my-4">
+    <div class="form-group">
+      <label for="xVar">
+        <h4>Select an Independent Variable:</h4>
+      </label>
+      <select class="form-control" name="xVar" id="xVar">
+        <option value="income">Per Capita Personal Income by State</option>
+	<option value="gdp">Gross Domestic Product by State</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="yVar">
+        <h4>Select an Dependent Variable:</h4>
+      </label>
+      <select class="form-control" name="yVar" id="yVar">
+        <option value="co2">Total carbon dioxide emissions from all sectors, all fuels, by State</option>
+	<option value="coal">Total coal consumption for electric power, by state</option>
+      </select>
+    </div>
+    <br>
+    <button class="btn btn-dark" type="submit">Get Stats</button>
+  </form>
+</div>
+<br><br><br>
+{% if data %}
+<div class="container">
+  <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</div>
+<br><br><br>
+<div class="container">
+  <table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+      <tr>
+	<th scope="col">State</th>
+	<th scope="col">{{ data['x']['description'] }} ({{ data['x']['units'] }})</th>
+	<th scope="col">{{ data['y']['description'] }} ({{ data['y']['units'] }})</th>
+      </tr>
+    </thead>
+    <tbody>
+	{% for member in data['x']['data'] %}
+	{% if (data['x']['data'][member] == NULL) or (data['y']['data'][member] == NULL) %}
+	{% else %}
+	<tr>
+	  <th scope="row">{{ member }}</th>
+	  <td>{{ data['x']['data'][member] }}</td>
+	  <td>{{ data['y']['data'][member] }}</td>
+	</tr>
+	{% endif %}
+	{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+<br><br><br>
+
+{% endblock %}

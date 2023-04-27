@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block title %}Lookup By State{% endblock %}
+</head>
+<body>
+    {% block header %}Stats By State{% endblock %}
+    {% block content %}
+    <div class="container">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class=flashes>
+        {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+
+        <form action="/lookup" class="my-4">
+            <div class="form-group">
+                <label for="state"> <h4>Select a state to retrieve statistics</h4> </label>
+                <select class="form-control" name="state" id="select-state">
+                    {% for  member in states.items() %}
+                        {% if member [1] == selected %}
+                        <option selected="selected" value="{{member[1]}}">{{member[0]}}</option>
+                        {% else %}
+                        <option value="{{member[1]}}">{{member[0]}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <button class="btn btn-dark" type="submit" value="submit" name="submit">Get Stats</button>
+            <button class="btn btn-dark" type="submit" value="favorite" name="submit">Add as Favorite</button>
+        </form>
+
+	{% if favorites|length == 0 %}
+	{% else %}
+	<div>
+	  <h4>Favorites:</h4>
+	  <div class="row d-flex justify-content-around">
+	    {% for member in favorites %}
+	    <div class="col-3">
+	      <a href="/lookup?state={{ AlphaToID[member[0]] }}&submit=submit">
+	      <div class="card">
+		<img alt="" class="card-img-top" src="{{ "http://flags.ox3.in/svg/us/{}.svg".format(member[0].lower()) }}"/>
+		<div class="card-body">
+		  <h5 class="card-title">{{ member[0] }}</h5>
+		</div>
+	      </div>
+	      </a>	      
+	    </div>
+	    {% endfor %}
+	  </div>
+	</div>
+	{% endif %}
+        {% if income %}
+            <div class="card text-center my-3">
+                <div class="card-header">
+                    {{income['GeoName']}}
+                </div>
+                <img class="mx-auto my-2 border" style="width: 50%; display:block;" src="{{flag}}" alt="Flag" >
+                <hr>
+                <div class="card-body">
+                    <h5 class="card-title">Per Capita Income in 2017</h5>
+                    <p class="card-text">${{income['DataValue']}}</p>
+                    <hr>
+                    <!-- <h4>{{income['GeoName']}}: ${{income['DataValue']}}</h4> -->
+        {% endif %}
+        {% if gdp %}
+            <h5 class="card-title">State GDP in millions of Dollars, 2017</h5>
+            <p class="card-text">${{gdp['DataValue']}} million</p>
+            <!-- <h4>{{gdp['GeoName']}}: ${{gdp['DataValue']}}</h4> -->
+            <hr>
+        {% endif %}
+		{% if coal %}
+			{% if 'data' not in coal %}
+            <h5 class="card-title">Coal Consumption, electric power, 2017</h5>
+            <p class="card-text">{{coal['series'][0]['data'][0][1]}} short tons</p>
+            <!-- <h4>{{gdp['GeoName']}}: ${{gdp['DataValue']}}</h4> -->
+            <hr>
+			{% endif %}
+        {% endif %}
+
+        {% if co2 %}
+            <!-- <h4>Industrial carbon dioxide emissions, all fuels, in {{co2['series'][0]['data'][0][0]}}</h4> -->
+            <!-- <h3>{{co2['series'][0]['data'][0][1]}} million metric tons CO2</h3> -->
+                    <h5 class="card-title">Industrial carbon dioxide emissions, all fuels, in {{co2['series'][0]['data'][0][0]}}</h5>
+                    <p class="card-text">{{co2['series'][0]['data'][0][1]}} million metric tons CO2</p>
+                </div>
+                <div class="card-footer text-muted">
+                    Data Retrieved from U.S. Energy Information Administration, Bureau of Economic Analysis.
+                </div>
+            </div>    
+        {% endif %}
+
+    </div>
+    {% endblock %}
+</body>
+</html>

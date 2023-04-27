@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="icon" href="./static/img/favicon.ico">
+    <title>{% block title %}Atmosphere{% endblock %}</title>
+    {% block graph %}{% endblock %}
+</head>
+<body>
+    <nav style="position: sticky; top: 0; z-index:1;">
+        <nav class="container-fluid py-3" style="background: #292a2b;">
+            <div class="row align-items-center justify-content-around">
+                <a class="h3" style="text-decoration: none; color: white;" href="/">Team Atmosphere<a>
+                {% if 'username' not in session %}
+                <a class="" style="justify-self:center;" class="" href="/login"> <button style="justify-self: center;"class="col btn btn-outline-light">Login</button> </a>
+                <a class="" style="justify-self:center;" class="" href="/register"> <button style="justify-self: center;"class="col btn btn-outline-light">Register</button> </a>
+                {% endif %}
+                <a class="" style="justify-self:center;" class="" href="/lookup"> <button style="justify-self: center;"class="col btn btn-outline-light">Stats by State</button> </a>
+                <a class="" style="justify-self:center;" class="" href="/analysis"> <button style="justify-self: center;"class="col btn btn-outline-light">Analysis by Indicators</button> </a>
+
+                {% if 'username' in session %}
+                <a class="" style="justify-self:center;" class="" href="/welcome"> <button style="justify-self: center;"class="col btn btn-outline-light">Dashboard</button> </a>
+                <a class="" style="justify-self:center;" class="" href="/logout"> <button style="justify-self: center;"class="col btn btn-danger">Logout</button> </a>
+                {% endif %}
+            </div>
+        </nav>
+    </nav>
+    <h3 class="text-center display-4">{% block header%}{% endblock %}</h3>
+    {% block hr %}<hr>{% endblock %}
+    {% block content %}
+    {% endblock %}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

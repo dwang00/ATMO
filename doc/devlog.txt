@@ -1,0 +1,116 @@
+aliceN -- 2019-12-04 06:10
+Final design doc updated, with all the current functionalities and functions added. Favadder adder to functions and routes. Added comments to some functions in app.py that could help with clarification.
+
+josephY -- 2019-12-03 00:10
+Finishing touches, favorite mechanism working
+
+wangD -- 2019-12-03 23:01
+Formatted dashboard, added flag to US statistics page.
+
+wangD -- 2019-12-03 9:24
+Finished statistics for United States.
+
+aliceN -- 2019-12-02 21:33
+Added table that compares analysis by indicators. Replaced the lorem text in the welcome page with instructions on how to run ATMO.
+
+josephY -- 2019-12-02 04:30
+User must now provide keys in seperate files in the keys directory.
+
+josephY -- 2019-12-01 15:10
+Added Coal usage variable, app now has two independent and two dependent variables.
+
+josephY -- 2019-11-29 01:30
+aNALYSIS bY iNDICATORS IS UP AND RUNNING. I am very tired, but I feel accomplished. As of right now, the
+analysis by indicators option only has three variables to choose from, but more can be put into place.
+All data is cached in a .json file called cache, and the cache is updated every time the server is started.
+
+josephY -- 2019-11-28 18:40
+Began caching ALL data into a cache,json file located in atmosphere/data/JSON. From here, the handler will pass data into the template, and the template will render the graph with the correct data points.
+
+wangD -- 2019-11-27 9:26
+Finished Census Bureau and EIA cards.
+
+aliceN -- 2019-11-27 9:25
+Updates to design doc:
+  - Removed "most recently viewed" functionality
+  - Updated component map to reflect currently used databases and APIs
+  - Added documentation for analysis.html
+  - Fixed documentation for base.html
+  - Changed name of database "users" to "loginfo"
+
+aliceN -- 2019-11-26 9:24
+Updated design doc to reflect current file names and APIs in use. Made the slider
+functionality optional and edited the scattergrams to only take in two variables and
+have each point on the scattergram be specific to one state.
+
+wangD -- 2019-11-26 8:56
+Home page displays more statistics
+
+josephY -- 2019-11-26 00:20
+Template for analysis page, need to figure out how to pass data to the template in order to generate
+the graph. As of right now, only the form works.
+
+josephY -- 2019-11-25 10:15
+Added boilerplate code for a scatterplot in the analysis section, using CanvasJS.
+
+aliceN -- 2019-11-25
+HOME STRETCH PLAN
+  - Generate a scattergram that compares specified data from two states and displays data in table (Nov. 29, Joseph)
+  - Complete the API cards (Nov. 27, David, Alice)
+  - Complete the Home Page and what will be displayed upon user login (Nov. 29, David)
+  - Cache API information into databases (Dec. 1, Moody)
+If we are "finished":
+  - Add user data specific functionality such as favorite states (Dec. 1)
+  - Add tables along with the scattergrams that display numerical data (Dec. 1)
+  - Add sliders that allow the users to move through time and view scattergram data through time (extra)
+
+josephY -- 2019-11-24 12:15
+New variable: State GDP from the BEAAPI. Weird x4 thing because there is an entry in the dataset for every quarter,
+rather than every year, but it seems to work. Flags API was messed up, fixed that as well.
+
+josephY -- 2019-11-24 01:00
+Succesfully implemented the U.S. Energy Information Administration API, as well as a nifty flags API. Lookup
+by state now gives two statistics, Per Capita income, and Industrial carbon emissions, as well as an image of
+the state flag of the state being looked up. Changes reflected in README.
+
+aliceN -- 2019-11-22 09:26
+Updated instructions, added hyperlinks to APIs, updated design doc
+
+josephY -- 2019-11-21 23:50
+Working implementation of BEA API, allowing the user to select a state to lookup per-
+capita income from. Next steps are to incorporate a climate indicator, such as tons of CO2,
+and generate a graph. Possible analysis tools: Correlation Coefficient, comparison accross states
+
+wangD -- 2019-11-21 15:31
+Welcome page displays welcome message and US population, flashes successful sign
+in if user just signed in.
+
+josephY -- 2019-11-21 10:30
+DC was missing from states.csv, so I added it. Added drowpdown in lookup.
+
+josephY -- 2019-11-21 09:30
+Began making states API, programmes message flashing into templates for login and resigser. states.csv
+needs to be incremented by 1!!!
+
+moodyR -- 2019-11-21 09:04
+Put some of the finishing touches on the login-registration
+
+aliceN -- 2019-11-21 09:03
+To make more awesome, we're going to write code as succint and easy to read
+as possible because that allows others to read code and evaluate
+them quickly and easily. Updating the design doc frequently to reflect new ideas
+and changes allows others to be aware of changes made and adjust accordingly.
+
+aliceN -- 2019-11-18 23:54
+To the design doc, added: specific bootstrap features to implement,
+explanation of how we store our data and how to access it,
+made users database more compact, added roles, added functions.
+
+aliceN -- 2019-11-18 06:14
+Finished preliminary design document.
+
+josephY -- 2019-11-14 21:35
+Began working on implementing the UNSTATS API, running into an issue where
+for most country codes, indicator 1.1.1 has blank "data." I don't know if this
+is a problem with the API, my querystring, or something else. Indicator 1.1.1
+for M49 code 1 (the World) works though, which is nice.
